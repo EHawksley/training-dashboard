@@ -40,15 +40,6 @@ import {
   weeklyMileage,
   weeklyVolume,
 } from "./metrics.js";
-import {
-  COOLDOWN_KEY,
-  COOLDOWN_MS,
-  SUCCESS_MESSAGE,
-  isConfigured,
-  loadSettings,
-  postRunCompleted,
-  saveSettings,
-} from "./webhook.js";
 
 const TYPE_COLOR = {
   Base: "#3ee0b0",
@@ -65,12 +56,6 @@ const state = {
 
 let model = null;
 let cleanups = [];
-const runState = {
-  status: "idle",
-  message: "",
-  cooldownUntil: 0,
-};
-let cooldownTimer = 0;
 
 function h(tag, props, ...kids) {
   const node = document.createElement(tag);
@@ -111,26 +96,11 @@ function pageHeader(title) {
       h("p", { class: "eyebrow" }, "Evan · Hybrid"),
       h("h1", {}, title),
     ),
-    h("div", { class: "top-side" },
-      h("button", {
-        type: "button",
-        class: "gear",
-        "aria-label": "Settings",
-        onClick: () => openSettings(),
-      }, icon(`<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Z"/><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M19.4 13.5a1.6 1.6 0 0 0 .3 1.7l.1.1a1.8 1.8 0 1 1-2.5 2.5l-.1-.1a1.6 1.6 0 0 0-1.7-.3 1.6 1.6 0 0 0-1 1.4v.2a1.8 1.8 0 1 1-3.6 0v-.2a1.6 1.6 0 0 0-1-1.4 1.6 1.6 0 0 0-1.7.3l-.1.1a1.8 1.8 0 1 1-2.5-2.5l.1-.1a1.6 1.6 0 0 0 .3-1.7 1.6 1.6 0 0 0-1.4-1H4.3a1.8 1.8 0 1 1 0-3.6h.2a1.6 1.6 0 0 0 1.4-1 1.6 1.6 0 0 0-.3-1.7l-.1-.1a1.8 1.8 0 1 1 2.5-2.5l.1.1a1.6 1.6 0 0 0 1.7.3H10a1.6 1.6 0 0 0 1-1.4V4.3a1.8 1.8 0 1 1 3.6 0v.2a1.6 1.6 0 0 0 1 1.4 1.6 1.6 0 0 0 1.7-.3l.1-.1a1.8 1.8 0 1 1 2.5 2.5l-.1.1a1.6 1.6 0 0 0-.3 1.7v.1c.2.6.8 1 1.4 1h.2a1.8 1.8 0 1 1 0 3.6h-.2a1.6 1.6 0 0 0-1.4 1Z"/></svg>`)),
-      through ? h("p", { class: "updated" },
-        h("span", {}, "Log through"),
-        h("strong", {}, formatPretty(through)),
-      ) : null,
-    ),
+    through ? h("p", { class: "updated" },
+      h("span", {}, "Log through"),
+      h("strong", {}, formatPretty(through)),
+    ) : null,
   );
-}
-
-function icon(markup) {
-  const wrap = document.createElement("span");
-  wrap.className = "icon";
-  wrap.innerHTML = markup;
-  return wrap;
 }
 
 function legendItem(color, label, dashed = false) {
@@ -827,7 +797,6 @@ function render({ keepScroll = false } = {}) {
   document.title = `${title} · Training`;
   const view = tab === "calendar" ? renderCalendar() : tab === "strength" ? renderStrength() : renderRunning();
   document.getElementById("view").replaceChildren(view.node);
-  syncRunDock();
   requestAnimationFrame(() => {
     for (const mount of view.mounts) {
       const cleanup = mount();
@@ -867,187 +836,7 @@ function registerSW() {
   });
 }
 
-function mountRunChrome() {
-  const dock = h("div", { class: "run-dock", hidden: true },
-    h("p", { class: "run-status", role: "status", "aria-live": "polite", hidden: true }),
-    h("button", {
-      type: "button",
-      class: "run-button",
-      onClick: () => completeRun(),
-    },
-      icon(`<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M5 12.5 9.2 17 19 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`),
-      h("span", { class: "run-label" }, "Completed run"),
-    ),
-  );
-  const sheet = h("div", { class: "sheet-backdrop", hidden: true },
-    h("form", { class: "sheet", "aria-labelledby": "settings-title", onSubmit: saveSettingsForm },
-      h("div", { class: "sheet-handle", "aria-hidden": "true" }),
-      h("div", { class: "sheet-head" },
-        h("h2", { id: "settings-title" }, "Settings"),
-        h("button", { type: "button", class: "sheet-close", "aria-label": "Close settings", onClick: closeSettings }, "Close"),
-      ),
-      field("Webhook URL", "url", "webhook-url", "https://"),
-      field("Header name", "text", "webhook-header", "Authorization"),
-      field("Header value", "password", "webhook-key", "Sender key"),
-      h("p", { class: "sheet-help" }, "Paste the URL and sender key from the run-completed-button routine panel in Grok Bot."),
-      h("p", { class: "sheet-error", hidden: true }),
-      h("button", { type: "submit", class: "sheet-save" }, "Save"),
-    ),
-  );
-  sheet.addEventListener("click", (event) => {
-    if (event.target === sheet) closeSettings();
-  });
-  document.querySelector(".app").append(dock, sheet);
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") closeSettings();
-  });
-}
-
-function field(label, type, id, placeholder) {
-  return h("label", { class: "sheet-field" },
-    h("span", {}, label),
-    h("input", {
-      id,
-      type,
-      name: id,
-      placeholder,
-      autocomplete: "off",
-      spellcheck: "false",
-    }),
-  );
-}
-
-function settingsForm() {
-  return document.querySelector(".sheet");
-}
-
-function openSettings() {
-  const settings = loadSettings(localStorage);
-  const form = settingsForm();
-  form.elements["webhook-url"].value = settings.url;
-  form.elements["webhook-header"].value = settings.headerName || "Authorization";
-  form.elements["webhook-key"].value = settings.headerValue;
-  const error = form.querySelector(".sheet-error");
-  error.hidden = true;
-  error.textContent = "";
-  document.querySelector(".sheet-backdrop").hidden = false;
-  form.elements["webhook-url"].focus();
-}
-
-function closeSettings() {
-  const backdrop = document.querySelector(".sheet-backdrop");
-  if (backdrop) backdrop.hidden = true;
-}
-
-function saveSettingsForm(event) {
-  event.preventDefault();
-  const form = settingsForm();
-  const error = form.querySelector(".sheet-error");
-  const url = form.elements["webhook-url"].value.trim();
-  const headerName = form.elements["webhook-header"].value.trim();
-  const headerValue = form.elements["webhook-key"].value.trim();
-  if (!url || !headerValue) {
-    error.hidden = false;
-    error.textContent = url ? "Add the sender key." : "Add the webhook URL.";
-    return;
-  }
-  let parsed;
-  try {
-    parsed = new URL(url);
-  } catch {
-    parsed = null;
-  }
-  if (!parsed || (parsed.protocol !== "https:" && parsed.protocol !== "http:")) {
-    error.hidden = false;
-    error.textContent = "Enter a full http or https URL.";
-    return;
-  }
-  saveSettings({ url, headerName, headerValue }, localStorage);
-  closeSettings();
-}
-
-function restoreCooldown() {
-  const until = Number(sessionStorage.getItem(COOLDOWN_KEY) || 0);
-  if (until > Date.now()) {
-    runState.status = "success";
-    runState.message = SUCCESS_MESSAGE;
-    runState.cooldownUntil = until;
-    armCooldownTimer();
-  }
-}
-
-function armCooldownTimer() {
-  clearInterval(cooldownTimer);
-  const tick = () => {
-    if (Date.now() >= runState.cooldownUntil) {
-      clearInterval(cooldownTimer);
-      runState.status = "idle";
-      runState.message = "";
-      runState.cooldownUntil = 0;
-      sessionStorage.removeItem(COOLDOWN_KEY);
-    }
-    syncRunDock();
-  };
-  tick();
-  cooldownTimer = setInterval(tick, 1000);
-}
-
-function syncRunDock() {
-  const dock = document.querySelector(".run-dock");
-  if (!dock) return;
-  const show = Boolean(model) && currentTab() === "running";
-  dock.hidden = !show;
-  document.querySelector(".app")?.classList.toggle("has-run-dock", show);
-  const status = dock.querySelector(".run-status");
-  const button = dock.querySelector(".run-button");
-  const label = dock.querySelector(".run-label");
-  const cooling = Date.now() < runState.cooldownUntil;
-  const sending = runState.status === "sending";
-  button.disabled = sending || cooling;
-  button.classList.toggle("is-sending", sending);
-  status.hidden = !runState.message;
-  status.textContent = runState.message;
-  status.classList.toggle("is-error", runState.status === "error");
-  status.classList.toggle("is-success", runState.status === "success");
-  label.textContent = sending ? "Sending…" : runState.status === "error" ? "Retry" : "Completed run";
-  let spinner = button.querySelector(".spinner");
-  if (sending && !spinner) {
-    spinner = document.createElement("span");
-    spinner.className = "spinner";
-    spinner.setAttribute("aria-hidden", "true");
-    button.insertBefore(spinner, label);
-  } else if (!sending && spinner) {
-    spinner.remove();
-  }
-}
-
-async function completeRun() {
-  const settings = loadSettings(localStorage);
-  if (!isConfigured(settings)) {
-    openSettings();
-    return;
-  }
-  if (runState.status === "sending" || Date.now() < runState.cooldownUntil) return;
-  runState.status = "sending";
-  runState.message = "";
-  syncRunDock();
-  try {
-    await postRunCompleted(settings);
-    runState.status = "success";
-    runState.message = SUCCESS_MESSAGE;
-    runState.cooldownUntil = Date.now() + COOLDOWN_MS;
-    sessionStorage.setItem(COOLDOWN_KEY, String(runState.cooldownUntil));
-    armCooldownTimer();
-  } catch (error) {
-    runState.status = "error";
-    runState.message = error?.message || "Could not reach the webhook.";
-    syncRunDock();
-  }
-}
-
 async function init() {
-  mountRunChrome();
-  restoreCooldown();
   window.addEventListener("hashchange", () => render());
   window.addEventListener("keydown", (event) => {
     if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) return;

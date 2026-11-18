@@ -39,9 +39,7 @@ Extra columns are ignored. More Garmin fields can be added later without breakin
 2. Tap Share, then Add to Home Screen.
 3. Open it from the icon. It runs standalone, caches the app shell, and always tries the network first for the CSVs.
 
-## Completed run
-
-Running, Strength, and Calendar are separate tabs. Running opens first. The Running page has a Completed run button. The first tap opens Settings. Paste the webhook URL and sender key from the run-completed-button routine panel in Grok Bot. They are saved only in this phone's local storage and are not part of the repo. A successful tap waits 60 seconds before the button can be used again.
+Running, Strength, and Calendar are separate tabs. Running opens first.
 
 ## Run it locally
 
