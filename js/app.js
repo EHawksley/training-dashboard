@@ -91,9 +91,9 @@ function h(tag, props, ...kids) {
 
 function currentTab() {
   const hash = location.hash.replace(/^#\/?/, "");
+  if (hash.startsWith("strength")) return "strength";
   if (hash.startsWith("calendar")) return "calendar";
-  if (hash.startsWith("recent")) return "recent";
-  return "progress";
+  return "running";
 }
 
 function syncTabs() {
@@ -162,7 +162,28 @@ function statPair(leftLabel, leftValue, leftSub, rightLabel, rightValue, rightSu
   );
 }
 
-function renderProgress() {
+function renderRunning() {
+  const mounts = [];
+  const today = new Date();
+  const summary = weekSummary(model, today);
+  const totals = logTotals(model);
+  const newest = latestRun();
+  const page = h("div", { class: "page", "data-view": "running" },
+    pageHeader("Running"),
+    h("p", { class: "week-label" }, `This week · ${summary.rangeLabel}`),
+    h("section", { class: "summary pair", "aria-label": `This week ${summary.rangeLabel}` },
+      stat("miles", formatMilesFixed(summary.miles, 1), "miles"),
+      stat("runs", String(summary.runCount), "runs"),
+    ),
+    h("p", { class: "log-line" }, `${formatMiles(totals.miles)} mi · ${totals.runs} runs in the log`),
+    newest ? [h("h2", { class: "section-label" }, "Latest run"), renderRunCard(newest)] : null,
+    ...runningSections(mounts, today),
+    ...recentFeed("runs", newest),
+  );
+  return { node: page, mounts };
+}
+
+function renderStrength() {
   const mounts = [];
   const today = new Date();
   const summary = weekSummary(model, today);
@@ -170,7 +191,6 @@ function renderProgress() {
   const prs = computePRs(model.sets);
   const lifts = exerciseList(model.sets);
   if (!state.lift || !lifts.includes(state.lift)) state.lift = lifts[0] || "";
-
   const latestByExercise = [];
   const seen = new Set();
   for (const pr of prs) {
@@ -179,36 +199,51 @@ function renderProgress() {
     latestByExercise.push(pr);
     if (latestByExercise.length === 6) break;
   }
-
-  const page = h("div", { class: "page", "data-view": "progress" },
-    pageHeader("Progress"),
+  const page = h("div", { class: "page", "data-view": "strength" },
+    pageHeader("Strength"),
     h("p", { class: "week-label" }, `This week · ${summary.rangeLabel}`),
-    h("section", { class: "summary", "aria-label": `This week ${summary.rangeLabel}` },
-      stat("miles", formatMilesFixed(summary.miles, 1), "miles"),
-      stat("runs", String(summary.runCount), "runs"),
+    h("section", { class: "summary pair", "aria-label": `This week ${summary.rangeLabel}` },
       stat("sessions", String(summary.liftSessions), "sessions"),
       stat("volume", formatCompact(summary.volume), "volume"),
     ),
-    h("p", { class: "log-line" },
-      `${formatMiles(totals.miles)} mi · ${totals.runs} runs · ${totals.sessions} lift sessions in the log`,
-    ),
-    latestByExercise.length ? h("div", { class: "pr-scroller", "aria-label": "Latest PRs" },
-      latestByExercise.map((pr) => prChip(pr)),
-    ) : null,
-    h("div", { class: "jumps" },
-      h("button", { type: "button", onClick: () => document.getElementById("running")?.scrollIntoView({ behavior: "smooth" }) }, "Running"),
-      h("button", { type: "button", onClick: () => document.getElementById("strength")?.scrollIntoView({ behavior: "smooth" }) }, "Strength"),
-    ),
-    h("h2", { class: "section-label", id: "running" }, "Running"),
-    ...runningSections(mounts, today),
-    h("h2", { class: "section-label", id: "strength" }, "Strength"),
+    h("p", { class: "log-line" }, `${totals.sessions} sessions · ${formatInt(totals.volume)} lb in the log`),
+    latestByExercise.length ? [
+      h("h2", { class: "section-label" }, "Latest PRs"),
+      h("div", { class: "pr-scroller", "aria-label": "Latest PRs" }, latestByExercise.map((pr) => prChip(pr))),
+    ] : null,
     liftField(lifts),
     liftChart(mounts),
     volumeCard(mounts, today),
     prList(prs),
     bodyweightSection(mounts),
+    ...recentFeed("lifts"),
   );
   return { node: page, mounts };
+}
+
+function latestRun() {
+  for (const day of feedDays(model)) {
+    if (day.runs.length) return day.runs[day.runs.length - 1];
+  }
+  return null;
+}
+
+function recentFeed(kind, skipRun = null) {
+  const prIndex = new Set(computePRs(model.sets).map((pr) => `${pr.date}|${pr.workout}|${pr.exercise}`));
+  const days = feedDays(model).map((day) => ({
+    date: day.date,
+    runs: kind === "runs" ? day.runs.filter((run) => run !== skipRun) : [],
+    lifts: kind === "lifts" ? day.lifts : [],
+  })).filter((day) => day.runs.length || day.lifts.length);
+  if (!days.length) return [];
+  return [
+    h("h2", { class: "section-label" }, kind === "runs" ? "Earlier runs" : "Recent lifts"),
+    days.map((day) => h("section", { class: "day-group" },
+      h("h2", { class: "day-label" }, formatFull(day.date)),
+      day.runs.map((run) => renderRunCard(run)),
+      day.lifts.map((lift) => renderLiftCard(lift, prIndex)),
+    )),
+  ];
 }
 
 function stat(kind, value, label) {
@@ -728,21 +763,6 @@ function dayDetail(activities, prIndex) {
   ];
 }
 
-function renderRecent() {
-  const prIndex = new Set(computePRs(model.sets).map((pr) => `${pr.date}|${pr.workout}|${pr.exercise}`));
-  const days = feedDays(model);
-  const page = h("div", { class: "page", "data-view": "recent" },
-    pageHeader("Recent"),
-    h("p", { class: "week-label" }, "Newest workouts first"),
-    days.map((day) => h("section", { class: "day-group" },
-      h("h2", { class: "day-label" }, formatFull(day.date)),
-      day.runs.map((run) => renderRunCard(run)),
-      day.lifts.map((lift) => renderLiftCard(lift, prIndex)),
-    )),
-  );
-  return { node: page, mounts: [] };
-}
-
 function renderRunCard(run) {
   return h("article", { class: "card feed-card" },
     h("div", { class: "feed-top" },
@@ -803,9 +823,9 @@ function render({ keepScroll = false } = {}) {
   cleanups = [];
   const tab = currentTab();
   syncTabs();
-  const title = tab === "calendar" ? "Calendar" : tab === "recent" ? "Recent" : "Progress";
+  const title = tab === "calendar" ? "Calendar" : tab === "strength" ? "Strength" : "Running";
   document.title = `${title} · Training`;
-  const view = tab === "calendar" ? renderCalendar() : tab === "recent" ? renderRecent() : renderProgress();
+  const view = tab === "calendar" ? renderCalendar() : tab === "strength" ? renderStrength() : renderRunning();
   document.getElementById("view").replaceChildren(view.node);
   syncRunDock();
   requestAnimationFrame(() => {
@@ -975,7 +995,7 @@ function armCooldownTimer() {
 function syncRunDock() {
   const dock = document.querySelector(".run-dock");
   if (!dock) return;
-  const show = Boolean(model) && currentTab() === "progress";
+  const show = Boolean(model) && currentTab() === "running";
   dock.hidden = !show;
   document.querySelector(".app")?.classList.toggle("has-run-dock", show);
   const status = dock.querySelector(".run-status");
