@@ -1,13 +1,14 @@
 // App shell is cached. Training CSVs are always network-first so a new
 // commit shows up without a code change. A cached copy is only a fallback.
 
-const VERSION = "td-1";
+const VERSION = "td-2";
 const SHELL = [
   "./",
   "./index.html",
   "./css/app.css",
   "./js/app.js",
   "./js/csv.js",
+  "./js/webhook.js",
   "./js/metrics.js",
   "./js/charts.js",
   "./manifest.json",
@@ -32,6 +33,8 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("fetch", (event) => {
   const request = event.request;
+  // Never intercept or cache POST. The completed-run webhook is a POST and
+  // must always go straight to the network, including the no-cors retry.
   if (request.method !== "GET") return;
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
