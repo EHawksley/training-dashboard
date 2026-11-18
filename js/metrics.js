@@ -329,10 +329,14 @@ export function exerciseList(sets) {
   return [...primary, ...rest];
 }
 
+function isLoggedBodyweight(set) {
+  return set.weight === 0 && set.reps > 0;
+}
+
 export function isBodyweightExercise(sets, name) {
   const list = sets.filter((set) => set.exercise === name);
   if (!list.length) return false;
-  const bodyweight = list.filter((set) => set.weight === 0).length;
+  const bodyweight = list.filter(isLoggedBodyweight).length;
   return bodyweight * 2 > list.length;
 }
 
@@ -394,7 +398,7 @@ export function bodyweightBlocks(sets) {
   }
   const names = [...byName.keys()].filter((name) => {
     const list = byName.get(name);
-    const bodyweight = list.filter((set) => set.weight === 0).length;
+    const bodyweight = list.filter(isLoggedBodyweight).length;
     return bodyweight * 2 > list.length;
   }).sort((a, b) => a.localeCompare(b));
   return names.map((exercise) => {
