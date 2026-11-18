@@ -9,6 +9,7 @@ import {
   computePRs,
   e1rmSeries,
   exerciseList,
+  isBodyweightExercise,
   loadModel,
   monthGrid,
   repSeries,
@@ -50,8 +51,15 @@ test("parses quoted thousands, missing notes, and commas inside notes", () => {
 });
 
 test("real log shape and quirks", () => {
-  assert.equal(model.runs.length, 20);
-  assert.equal(model.sets.length, 133);
+  assert.equal(model.runs.length, 23);
+  assert.equal(model.sets.length, 147);
+  const bike = model.sets.find((set) => set.exercise === "Assault Bike");
+  assert.equal(bike.reps, 0);
+  assert.equal(bike.weight, 0);
+  assert.equal(bike.volume, 0);
+  assert.equal(bike.e1rm, null);
+  assert.match(bike.notes, /14\.5 km/);
+  assert.equal(model.sets.some((set) => !Number.isFinite(set.volume) || !Number.isFinite(set.reps) || !Number.isFinite(set.weight)), false);
   const first = model.sets.find((set) => set.date === "2026-10-26" && set.exercise === "Bench Press" && set.setNum === 1);
   assert.equal(first.weight, 135);
   assert.equal(first.volume, 1350);
@@ -76,31 +84,31 @@ test("weeks start Monday and this week matches 18 Nov 2026", () => {
   assert.equal(weekStartISO("2026-10-13"), "2026-10-12");
   const summary = weekSummary(model, today);
   assert.equal(summary.rangeLabel, "Nov 16–22");
-  assert.equal(summary.miles, 0);
-  assert.equal(summary.runCount, 0);
-  assert.equal(summary.liftSessions, 1);
-  assert.equal(summary.volume, 21045);
+  assert.equal(summary.miles, 3.53);
+  assert.equal(summary.runCount, 1);
+  assert.equal(summary.liftSessions, 3);
+  assert.equal(summary.volume, 27240);
   const miles = weeklyMileage(model.runs, today);
   const byWeek = Object.fromEntries(miles.map((week) => [week.week, week.value]));
   near(byWeek["2026-10-12"], 18.78, "oct 12");
   near(byWeek["2026-10-19"], 31.29, "oct 19");
   near(byWeek["2026-10-26"], 20.66, "oct 26");
   near(byWeek["2026-11-02"], 18.96, "nov 2");
-  near(byWeek["2026-11-09"], 3.98, "nov 9");
-  near(byWeek["2026-11-16"], 0, "nov 16");
+  near(byWeek["2026-11-09"], 17.68, "nov 9");
+  near(byWeek["2026-11-16"], 3.53, "nov 16");
   assert.equal(miles.find((week) => week.week === "2026-11-16").isCurrent, true);
   const volume = weeklyVolume(model.sets, today);
-  assert.equal(volume.find((week) => week.week === "2026-11-16").value, 21045);
+  assert.equal(volume.find((week) => week.week === "2026-11-16").value, 27240);
 });
 
 test("efficiency trend, base target, and lift records", () => {
   const ef = trendRuns(model.runs, ["Base", "Long", "Threshold"]);
-  assert.equal(ef.filter((run) => run.type === "Base" || run.type === "Long").length, 13);
-  assert.equal(ef.filter((run) => run.type === "Threshold").length, 3);
+  assert.equal(ef.filter((run) => run.type === "Base" || run.type === "Long").length, 15);
+  assert.equal(ef.filter((run) => run.type === "Threshold").length, 4);
   assert.equal(trendRuns(model.runs, ["Sprint"]).length, 1);
   const base = baseCompliance(model.runs);
   assert.equal(BASE_HR_TARGET, 147);
-  assert.equal(base.total, 10);
+  assert.equal(base.total, 11);
   assert.equal(base.hits.length, 1);
   assert.equal(base.hits[0].date, "2026-10-21");
   assert.deepEqual(exerciseList(model.sets).slice(0, 5), [
@@ -125,9 +133,11 @@ test("efficiency trend, base target, and lift records", () => {
   assert.deepEqual(pullups.kinds, ["reps"]);
   assert.equal(pullups.reps, 10);
   const block = bodyweightBlocks(model.sets).find((item) => item.exercise === "Pull-ups");
-  assert.deepEqual(block.sessions.map((session) => session.reps), [28, 40, 50]);
+  assert.deepEqual(block.sessions.map((session) => session.reps), [28, 40, 50, 56]);
   assert.equal(repSeries(model.sets, "Pull-ups")[2].best, 10);
   assert.equal(bodyweightBlocks(model.sets).some((item) => item.exercise === "Back Extension"), false);
+  assert.equal(bodyweightBlocks(model.sets).some((item) => item.exercise === "Assault Bike"), false);
+  assert.equal(isBodyweightExercise(model.sets, "Assault Bike"), false);
 });
 
 test("November 2026 calendar starts on Monday", () => {

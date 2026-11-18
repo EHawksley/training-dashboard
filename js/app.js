@@ -755,15 +755,16 @@ function renderRunCard(run) {
 
 function renderLiftCard(lift, prIndex) {
   const volume = lift.sets.reduce((sum, set) => sum + set.volume, 0);
+  const scored = lift.sets.some((set) => set.weight > 0 || set.reps > 0);
   return h("article", { class: "card feed-card" },
     h("div", { class: "feed-top" },
       h("span", { class: "pill lift" }, lift.workout),
-      h("span", { class: "vol" }, `${formatInt(volume)} lb`),
+      scored ? h("span", { class: "vol" }, `${formatInt(volume)} lb`) : null,
     ),
-    h("div", { class: "lift-hero" },
+    scored ? h("div", { class: "lift-hero" },
       h("div", { class: "hero" }, h("b", {}, formatInt(volume)), h("span", {}, "lb volume")),
       h("div", { class: "hero" }, h("b", {}, String(lift.sets.length)), h("span", {}, "sets")),
-    ),
+    ) : null,
     exercisesInSession(lift.sets).map(([exercise, sets]) => {
       const notes = [];
       for (const set of sets) if (set.notes && !notes.includes(set.notes)) notes.push(set.notes);
@@ -774,10 +775,12 @@ function renderLiftCard(lift, prIndex) {
           isPR ? h("span", { class: "pr-tag" }, "PR") : null,
         ),
         h("div", { class: "set-row" }, sets.map((set) => {
-          const label = set.weight === 0 ? `BW × ${set.reps}` : `${formatLb(set.weight)} × ${set.reps}`;
+          if (set.weight === 0 && set.reps === 0) return null;
+          const bodyweight = set.weight === 0;
+          const label = bodyweight ? `BW × ${set.reps}` : `${formatLb(set.weight)} × ${set.reps}`;
           return h("span", {
-            class: set.weight === 0 ? "set bw" : "set",
-            "aria-label": set.weight === 0 ? `bodyweight by ${set.reps}` : `${set.weight} pounds by ${set.reps}`,
+            class: bodyweight ? "set bw" : "set",
+            "aria-label": bodyweight ? `bodyweight by ${set.reps}` : `${set.weight} pounds by ${set.reps}`,
           }, label);
         })),
         notes.map((note) => h("p", { class: "ex-note" }, note)),
