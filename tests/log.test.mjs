@@ -152,6 +152,6 @@ test("site stays relative and installable", () => {
   assert.match(sw, /no-store/);
   assert.match(sw, /networkFirst/);
   assert.match(sw, /\.\/data\/runs\.csv/);
-  assert.match(sw, /const VERSION = "td-3"/);
+  assert.match(sw, /const VERSION = "td-4"/);
   assert.match(sw, /request\.method !== "GET"/);
 });
