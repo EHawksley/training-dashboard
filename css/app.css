@@ -129,6 +129,8 @@ h1 {
   gap: 8px;
   padding: 12px 16px 0;
 }
+.summary.pair { grid-template-columns: 1fr 1fr; }
+.summary.pair .stat b { font-size: 26px; }
 
 .stat {
   background: rgba(255, 255, 255, 0.035);
@@ -635,6 +637,7 @@ h1 {
 }
 .tabbar a svg { display: block; }
 .tabbar a[aria-current="page"] { color: var(--run); }
+.tabbar a[data-tab="strength"][aria-current="page"] { color: var(--lift); }
 
 .run-dock {
   position: fixed;

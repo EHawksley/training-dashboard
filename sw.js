@@ -1,7 +1,7 @@
 // App shell is cached. Training CSVs are always network-first so a new
 // commit shows up without a code change. A cached copy is only a fallback.
 
-const VERSION = "td-2";
+const VERSION = "td-3";
 const SHELL = [
   "./",
   "./index.html",
