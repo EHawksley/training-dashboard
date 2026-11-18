@@ -1,0 +1,134 @@
+Date,Day,Workout,Exercise,Set #,Reps,Weight (lb),Volume,Est 1RM (Epley),Notes
+2026-10-26,Mon,Push,Bench Press,1,10,135,"1,350",180.0
+2026-10-26,Mon,Push,Bench Press,2,8,185,"1,480",234.3
+2026-10-26,Mon,Push,Bench Press,3,5,205,"1,025",239.2
+2026-10-26,Mon,Push,Bench Press,4,5,205,"1,025",239.2
+2026-10-26,Mon,Push,Bench Press,5,5,205,"1,025",239.2,Bench felt easy
+2026-10-26,Mon,Push,Shoulder Press,1,8,95,760,120.3
+2026-10-26,Mon,Push,Shoulder Press,2,5,135,675,157.5
+2026-10-26,Mon,Push,Shoulder Press,3,4,135,540,153.0,Failure at 135 x 4
+2026-10-28,Wed,Legs,Back Squat,1,8,135,"1,080",171.0
+2026-10-28,Wed,Legs,Back Squat,2,8,135,"1,080",171.0
+2026-10-28,Wed,Legs,Back Squat,3,8,165,"1,320",209.0
+2026-10-28,Wed,Legs,Back Squat,4,8,185,"1,480",234.3
+2026-10-28,Wed,Legs,Back Squat,5,7,205,"1,435",252.8
+2026-10-28,Wed,Legs,Deadlift,1,10,135,"1,350",180.0
+2026-10-28,Wed,Legs,Deadlift,2,3,225,675,247.5
+2026-10-28,Wed,Legs,Deadlift,3,5,225,"1,125",262.5
+2026-10-28,Wed,Legs,Deadlift,4,3,225,675,247.5
+2026-10-30,Fri,Pull,Back Extension,1,20,0,0,,Bodyweight
+2026-10-30,Fri,Pull,Back Extension,2,15,45,675,67.5
+2026-10-30,Fri,Pull,Back Extension,3,20,45,900,75.0
+2026-10-30,Fri,Pull,Back Extension,4,15,45,675,67.5
+2026-10-30,Fri,Pull,Barbell Row,1,10,135,"1,350",180.0
+2026-10-30,Fri,Pull,Barbell Row,2,12,135,"1,620",189.0
+2026-10-30,Fri,Pull,Barbell Row,3,12,135,"1,620",189.0
+2026-10-30,Fri,Pull,Barbell Row,4,12,135,"1,620",189.0
+2026-10-30,Fri,Pull,Barbell Row,5,12,135,"1,620",189.0
+2026-10-30,Fri,Pull,Dumbbell Curls,1,15,50,750,75.0,25 lb x2
+2026-10-30,Fri,Pull,Dumbbell Curls,2,15,50,750,75.0,25 lb x2
+2026-10-30,Fri,Pull,Dumbbell Curls,3,15,50,750,75.0,25 lb x2
+2026-10-30,Fri,Pull,Dumbbell Curls,4,15,50,750,75.0,25 lb x2
+2026-10-30,Fri,Pull,Pull-ups,1,8,0,0,,Bodyweight
+2026-10-30,Fri,Pull,Pull-ups,2,8,0,0,,Bodyweight
+2026-10-30,Fri,Pull,Pull-ups,3,6,0,0,,Weighted vest (weight TBD)
+2026-10-30,Fri,Pull,Pull-ups,4,6,0,0,,Weighted vest (weight TBD)
+2026-11-02,Mon,Push,Bench Press,1,8,185,"1,480",234.3
+2026-11-02,Mon,Push,Bench Press,2,5,225,"1,125",262.5
+2026-11-02,Mon,Push,Bench Press,3,4,225,900,255.0,+1 assisted rep
+2026-11-02,Mon,Push,Bench Press,4,4,225,900,255.0,+1 assisted rep
+2026-11-02,Mon,Push,Farmer Carry,1,1,90,90,93.0,45 lb each hand
+2026-11-02,Mon,Push,Farmer Carry,2,1,45,45,46.5,Right hand
+2026-11-02,Mon,Push,Farmer Carry,3,1,45,45,46.5,Left hand
+2026-11-02,Mon,Push,Shoulder Press,1,8,85,680,107.7
+2026-11-02,Mon,Push,Shoulder Press,2,5,135,675,157.5
+2026-11-02,Mon,Push,Shoulder Press,3,6,135,810,162.0
+2026-11-02,Mon,Push,Shoulder Press,4,5,135,675,157.5
+2026-11-04,Wed,Legs,Back Squat,1,12,135,"1,620",189.0
+2026-11-04,Wed,Legs,Back Squat,2,10,185,"1,850",246.7
+2026-11-04,Wed,Legs,Back Squat,3,15,185,"2,775",277.5
+2026-11-04,Wed,Legs,Back Squat,4,15,185,"2,775",277.5
+2026-11-04,Wed,Legs,Deadlift,1,10,135,"1,350",180.0
+2026-11-04,Wed,Legs,Deadlift,2,10,135,"1,350",180.0
+2026-11-04,Wed,Legs,Deadlift,3,10,135,"1,350",180.0
+2026-11-04,Wed,Legs,Deadlift,4,10,135,"1,350",180.0
+2026-11-04,Wed,Legs,Deadlift,5,15,135,"2,025",202.5
+2026-11-04,Wed,Legs,Hip Thrust,1,10,135,"1,350",180.0
+2026-11-04,Wed,Legs,Hip Thrust,2,13,135,"1,755",193.5
+2026-11-04,Wed,Legs,Hip Thrust,3,12,135,"1,620",189.0
+2026-11-04,Wed,Legs,Hip Thrust,4,12,135,"1,620",189.0
+2026-11-04,Wed,Legs,Hip Thrust,5,20,135,"2,700",225.0
+2026-11-04,Wed,Legs,Split Squat,1,10,95,950,126.7
+2026-11-04,Wed,Legs,Split Squat,2,10,135,"1,350",180.0
+2026-11-04,Wed,Legs,Split Squat,3,10,135,"1,350",180.0
+2026-11-04,Wed,Legs,Split Squat,4,10,135,"1,350",180.0
+2026-11-04,Wed,Legs,Split Squat,5,10,135,"1,350",180.0
+2026-11-06,Fri,Pull,Back Extension,1,15,20,300,30.0
+2026-11-06,Fri,Pull,Back Extension,2,15,45,675,67.5
+2026-11-06,Fri,Pull,Back Extension,3,15,45,675,67.5
+2026-11-06,Fri,Pull,Back Extension,4,15,45,675,67.5
+2026-11-06,Fri,Pull,Back Extension,5,15,45,675,67.5
+2026-11-06,Fri,Pull,Barbell Row,1,10,135,"1,350",180.0
+2026-11-06,Fri,Pull,Barbell Row,2,12,135,"1,620",189.0
+2026-11-06,Fri,Pull,Barbell Row,3,10,155,"1,550",206.7
+2026-11-06,Fri,Pull,Barbell Row,4,10,155,"1,550",206.7
+2026-11-06,Fri,Pull,Barbell Row,5,10,155,"1,550",206.7
+2026-11-06,Fri,Pull,Dumbbell Curls,1,15,50,750,75.0,25 lb x2
+2026-11-06,Fri,Pull,Dumbbell Curls,2,20,50,"1,000",83.3,25 lb x2
+2026-11-06,Fri,Pull,Dumbbell Curls,3,20,50,"1,000",83.3,25 lb x2
+2026-11-06,Fri,Pull,Dumbbell Curls,4,20,50,"1,000",83.3,25 lb x2
+2026-11-06,Fri,Pull,Dumbbell Curls,5,20,50,"1,000",83.3,25 lb x2
+2026-11-06,Fri,Pull,Pull-ups,1,8,0,0,,Bodyweight
+2026-11-06,Fri,Pull,Pull-ups,2,8,0,0,,Bodyweight
+2026-11-06,Fri,Pull,Pull-ups,3,8,0,0,,Bodyweight
+2026-11-06,Fri,Pull,Pull-ups,4,8,0,0,,Bodyweight
+2026-11-06,Fri,Pull,Pull-ups,5,8,0,0,,Bodyweight
+2026-11-09,Mon,Push,Bench Press,1,8,205,"1,640",259.7
+2026-11-09,Mon,Push,Bench Press,2,5,225,"1,125",262.5
+2026-11-09,Mon,Push,Bench Press,3,5,225,"1,125",262.5
+2026-11-09,Mon,Push,Bench Press,4,4,225,900,255.0,+1 assisted rep
+2026-11-09,Mon,Push,Shoulder Press,1,5,135,675,157.5,"Only 1 set: shoulders fried after bench, under-ate night before, low energy"
+2026-11-09,Mon,Push,Suitcase Carry,1,1,45,45,46.5
+2026-11-09,Mon,Push,Suitcase Carry,2,1,70,70,72.3
+2026-11-12,Thu,Legs,Back Squat,1,10,135,"1,350",180.0
+2026-11-12,Thu,Legs,Back Squat,2,10,185,"1,850",246.7
+2026-11-12,Thu,Legs,Back Squat,3,10,205,"2,050",273.3
+2026-11-12,Thu,Legs,Back Squat,4,10,205,"2,050",273.3
+2026-11-12,Thu,Legs,Zercher Squat,1,10,135,"1,350",180.0
+2026-11-12,Thu,Legs,Zercher Squat,2,10,135,"1,350",180.0
+2026-11-12,Thu,Legs,Zercher Squat,3,10,135,"1,350",180.0
+2026-11-12,Thu,Legs,Hip Thrust,1,15,135,"2,025",202.5
+2026-11-12,Thu,Legs,Hip Thrust,2,10,185,"1,850",246.7
+2026-11-12,Thu,Legs,Hip Thrust,3,10,185,"1,850",246.7
+2026-11-12,Thu,Legs Round 2,Back Squat,1,10,135,"1,350",180.0,Round 2 (afternoon)
+2026-11-12,Thu,Legs Round 2,Back Squat,2,10,135,"1,350",180.0,Round 2 (afternoon)
+2026-11-12,Thu,Legs Round 2,Back Squat,3,10,155,"1,550",206.7,Round 2 (afternoon)
+2026-11-12,Thu,Legs Round 2,Back Squat,4,10,155,"1,550",206.7,Round 2 (afternoon)
+2026-11-12,Thu,Legs Round 2,Deadlift,1,10,155,"1,550",206.7,Round 2 (afternoon)
+2026-11-12,Thu,Legs Round 2,Deadlift,2,10,155,"1,550",206.7,Round 2 (afternoon)
+2026-11-14,Sat,Pull,Pull-ups,1,10,0,0,,Bodyweight
+2026-11-14,Sat,Pull,Pull-ups,2,10,0,0,,Bodyweight
+2026-11-14,Sat,Pull,Pull-ups,3,10,0,0,,Bodyweight
+2026-11-14,Sat,Pull,Pull-ups,4,10,0,0,,Bodyweight
+2026-11-14,Sat,Pull,Pull-ups,5,10,0,0,,Bodyweight
+2026-11-14,Sat,Pull,Back Extension,1,10,45,450,60.0
+2026-11-14,Sat,Pull,Back Extension,2,12,45,540,63.0
+2026-11-14,Sat,Pull,Back Extension,3,12,45,540,63.0
+2026-11-14,Sat,Pull,Back Extension,4,15,45,675,67.5
+2026-11-14,Sat,Pull,Dumbbell Curls,1,22,50,"1,100",86.7,25 lb x2
+2026-11-14,Sat,Pull,Dumbbell Curls,2,22,50,"1,100",86.7,25 lb x2
+2026-11-14,Sat,Pull,Dumbbell Curls,3,22,50,"1,100",86.7,25 lb x2
+2026-11-14,Sat,Pull,Dumbbell Curls,4,22,50,"1,100",86.7,25 lb x2
+2026-11-14,Sat,Pull,Dumbbell Curls,5,25,50,"1,250",91.7,25 lb x2
+2026-11-17,Tue,Legs,Back Squat,1,10,135,"1,350",180.0,"Relayed via chat, no journal photo"
+2026-11-17,Tue,Legs,Back Squat,2,10,185,"1,850",246.7
+2026-11-17,Tue,Legs,Back Squat,3,8,225,"1,800",285.0
+2026-11-17,Tue,Legs,Back Squat,4,12,185,"2,220",259.0
+2026-11-17,Tue,Legs,Back Squat,5,15,135,"2,025",202.5
+2026-11-17,Tue,Legs,Zercher Squat,1,10,135,"1,350",180.0
+2026-11-17,Tue,Legs,Zercher Squat,2,10,135,"1,350",180.0
+2026-11-17,Tue,Legs,Zercher Squat,3,10,135,"1,350",180.0
+2026-11-17,Tue,Legs,Zercher Squat,4,8,155,"1,240",196.3
+2026-11-17,Tue,Legs,Hip Thrust,1,12,155,"1,860",217.0
+2026-11-17,Tue,Legs,Hip Thrust,2,15,155,"2,325",232.5
+2026-11-17,Tue,Legs,Hip Thrust,3,15,155,"2,325",232.5
