@@ -226,12 +226,13 @@ export function latestLogDate(model) {
 }
 
 export function logTotals(model) {
-  const sessions = new Set(model.sets.map((set) => `${set.date}|${set.workout}`));
+  const lifting = model.sets.filter(countsTowardLiftProgress);
+  const sessions = new Set(lifting.map((set) => `${set.date}|${set.workout}`));
   return {
     miles: model.runs.reduce((sum, run) => sum + (run.distance || 0), 0),
     runs: model.runs.length,
     sessions: sessions.size,
-    volume: model.sets.reduce((sum, set) => sum + set.volume, 0),
+    volume: lifting.reduce((sum, set) => sum + set.volume, 0),
   };
 }
 
@@ -241,7 +242,8 @@ export function weekSummary(model, today = new Date()) {
   const inWeek = (date) => date >= start && date <= end;
   const runs = model.runs.filter((run) => inWeek(run.date));
   const sets = model.sets.filter((set) => inWeek(set.date));
-  const sessions = new Set(sets.map((set) => `${set.date}|${set.workout}`));
+  const lifting = sets.filter(countsTowardLiftProgress);
+  const sessions = new Set(lifting.map((set) => `${set.date}|${set.workout}`));
   return {
     start,
     end,
@@ -249,7 +251,7 @@ export function weekSummary(model, today = new Date()) {
     miles: runs.reduce((sum, run) => sum + (run.distance || 0), 0),
     runCount: runs.length,
     liftSessions: sessions.size,
-    volume: sets.reduce((sum, set) => sum + set.volume, 0),
+    volume: lifting.reduce((sum, set) => sum + set.volume, 0),
   };
 }
 
@@ -305,7 +307,7 @@ export function weeklyMileage(runs, today = new Date()) {
 }
 
 export function weeklyVolume(sets, today = new Date()) {
-  return buildWeeks(sets, today, (items) => ({
+  return buildWeeks(sets.filter(countsTowardLiftProgress), today, (items) => ({
     value: items.reduce((sum, set) => sum + set.volume, 0),
     count: new Set(items.map((set) => `${set.date}|${set.workout}`)).size,
   }));
@@ -323,10 +325,16 @@ export function trendRuns(runs, types) {
 }
 
 export function exerciseList(sets) {
-  const names = [...new Set(sets.map((set) => set.exercise))];
+  const names = [...new Set(sets.filter(countsTowardLiftProgress).map((set) => set.exercise))];
   const primary = PRIMARY_LIFTS.filter((name) => names.includes(name));
   const rest = names.filter((name) => !PRIMARY_LIFTS.includes(name)).sort((a, b) => a.localeCompare(b));
   return [...primary, ...rest];
+}
+
+const NON_PROGRESS_WORKOUTS = new Set(["core", "cardio"]);
+
+export function countsTowardLiftProgress(set) {
+  return !NON_PROGRESS_WORKOUTS.has(String(set.workout || "").trim().toLowerCase());
 }
 
 function isLoggedBodyweight(set) {
@@ -358,7 +366,7 @@ function betterE1rm(candidate, current) {
 }
 
 export function e1rmSeries(sets, exercise) {
-  const sessions = groupSessions(sets.filter((set) => set.exercise === exercise));
+  const sessions = groupSessions(sets.filter((set) => set.exercise === exercise && countsTowardLiftProgress(set)));
   const series = [];
   for (const session of sessions) {
     const weighted = session.sets.filter((set) => set.weight > 0 && set.e1rm != null);
@@ -419,6 +427,7 @@ function primaryRank(name) {
 export function computePRs(sets) {
   const byExercise = new Map();
   for (const set of sets) {
+    if (!countsTowardLiftProgress(set)) continue;
     if (!byExercise.has(set.exercise)) byExercise.set(set.exercise, []);
     byExercise.get(set.exercise).push(set);
   }
