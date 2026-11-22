@@ -24,3 +24,4 @@ Date,Title,Run Type,Distance (mi),Moving Time,Avg Pace,Avg GAP,Avg HR,Max HR,Asc
 2026-11-17,Utah County - Base,Base,3.53,0:35:26,10:03,10:03,153,165,157,160.33,1.05,Y
 2026-11-19,Utah County - Thu Hard Run - Sprints + Threshold,Threshold,2.65,0:26:00,09:49,,162,188,121,164.03,1.01,N,Sprints 6x25s; threshold block cut short after 2:04; Garmin execution 14%. Not a clean threshold effort (mostly sprints + warm-up); excluded from EF trend.
 2026-11-20,Utah County - Fri Easy Run - HR 147 cap,Base,4.01,0:41:14,10:17,,151,159,191,156.51,1.04,Y,Garmin https://connect.garmin.com/app/activity/25143209897. Easy run with 147 cap; averaged 151 (slightly over cap). Moving time not captured; used total time 41:14.
+2026-11-21,Utah County - Sat Long Run - HR 147 cap,Long,8.56,1:32:08,10:47,10:44,144,154,258,149.52,1.04,Y,Garmin https://connect.garmin.com/app/activity/25155675169. Long run with 147 cap; averaged 144 (under cap). Elapsed 1:34:15. Followed by 20 hand-release push-ups.
