@@ -155,3 +155,37 @@ Date,Day,Workout,Exercise,Set #,Reps,Weight (lb),Volume,Est 1RM (Epley),Notes
 2026-11-19,Thu,Cardio,Assault Bike,1,,,,,"Force USA assault/air bike, 2:07 PM MT, from Garmin (https://connect.garmin.com/app/activity/25135519500; no monitor photo). 40:16, 441 cal (Garmin), avg HR 132, max 141 (zone 2). Aerobic TE 2.1."
 2026-11-20,Fri,Cardio,Assault Bike,1,,,,,"Force USA assault/air bike, 12:59 PM MT. Monitor: 30:08, 14.6 km, 224 cal. Garmin (https://connect.garmin.com/app/activity/25145065345): 30:14, avg HR 132, max 142 (zone 2), 357 cal, aerobic TE 2.1. Second session of the day after easy run."
 2026-11-21,Sat,PT,Hand-Release Pushup,1,20,,,,"After 8.5 mi long run, not a fresh test."
+2026-11-23,Mon,PT,Hand-Release Pushup,1,41,0,0,,"RASP Wk1 D1 T-push-ups 4 x max (Army hand-release), fresh, after 2 mi easy run. Total 73. Big drop after set 1 suggests set 1 went to failure."
+2026-11-23,Mon,PT,Hand-Release Pushup,2,12,0,0,,Bodyweight
+2026-11-23,Mon,PT,Hand-Release Pushup,3,10,0,0,,Bodyweight
+2026-11-23,Mon,PT,Hand-Release Pushup,4,10,0,0,,Bodyweight
+2026-11-23,Mon,PT,Chin-ups,1,12,0,0,,"RASP Wk1 D1 chin-ups 4 x max, vest off. Total 27. Big drop after set 1 suggests set 1 went to failure."
+2026-11-23,Mon,PT,Chin-ups,2,6,0,0,,Bodyweight
+2026-11-23,Mon,PT,Chin-ups,3,5,0,0,,Bodyweight
+2026-11-23,Mon,PT,Chin-ups,4,4,0,0,,Bodyweight
+2026-11-23,Mon,PT,Plank,1,,,,,"1:00 hold, great form (RASP Wk1 D1, 2 x 1:00, rest :30)"
+2026-11-23,Mon,PT,Plank,2,,,,,"1:00 hold, great form"
+2026-11-23,Mon,Cardio,Assault Bike,1,,,,,"Force USA assault/air bike, easy aerobic add-on after RASP Wk1 D1 run + calisthenics. Console photo: 20:03, 9.9 (likely km), 157 cal. At photo moment 88 W, 23.6 km/h, 40 RPM (instantaneous, not averages). Garmin (https://connect.garmin.com/app/activity/25177870552): start 2:31 PM MT, 20:08, avg HR 130 (zone 2). Not a run; outside EF trend."
+2026-11-24,Tue,Work Capacity,AMRAP 20 min,1,8,,,,"RASP Wk1 D2 AMRAP 20 min, garage gym: 8 full rounds + 10 burpees into round 9 (Reps = full rounds). Circuit: Burpees x10, Walking Lunges x10/leg, Sit-ups x10, Mountain Climbers x10/leg (subbed for Bear Crawl 20 m). Next Tuesday target: 9 full rounds."
+2026-11-24,Tue,Work Capacity,Burpees,1,90,,,,AMRAP total (8 rounds x10 + 10)
+2026-11-24,Tue,Work Capacity,Walking Lunges,1,160,,,,"AMRAP total, 80 per leg"
+2026-11-24,Tue,Work Capacity,Sit-ups,1,80,,,,AMRAP total
+2026-11-24,Tue,Work Capacity,Mountain Climbers,1,160,,,,"AMRAP total, 80 per leg; subbed for Bear Crawl 20 m"
+2026-11-24,Tue,Strength,Trap Bar Deadlift,1,5,225,"1,125",262.5,"RASP Wk1 D2 afternoon barbell. Felt he could have gone heavier but back a little tight from morning burpees, so held back. Next Tue: ~245 x3-5 if back feels good."
+2026-11-24,Tue,Strength,Trap Bar Deadlift,2,5,225,"1,125",262.5,Short of failure; back a little tight from morning burpees
+2026-11-24,Tue,Strength,Trap Bar Deadlift,3,5,225,"1,125",262.5,Short of failure; back a little tight from morning burpees
+2026-11-24,Tue,Strength,Back Squat,1,10,135,"1,350",180.0,Warm-up
+2026-11-24,Tue,Strength,Back Squat,2,5,185,925,215.8,Work set
+2026-11-24,Tue,Strength,Back Squat,3,5,205,"1,025",239.2,Top set. Next Tue: 215-225 for 3x5 if back feels good; hold if still tight.
+2026-11-24,Tue,Strength,Bench Press,1,5,185,925,215.8,RASP Wk1 D2 afternoon barbell
+2026-11-24,Tue,Strength,Bench Press,2,5,185,925,215.8
+2026-11-24,Tue,Strength,Bench Press,3,5,205,"1,025",239.2,Top set
+2026-11-24,Tue,Strength,Sandbag Bear-Hug Squat,1,10,100,"1,000",133.3,RASP Wk1 D2; 100 lb (week 1 target 80-100). Evan confirmed he skipped sandbag shoulder carries and suitcase carries (back tight). Keep both in next Tuesday's plan.
+2026-11-24,Tue,Strength,Sandbag Bear-Hug Squat,2,10,100,"1,000",133.3,100 lb
+2026-11-24,Tue,Strength,Sandbag Bear-Hug Squat,3,10,100,"1,000",133.3,100 lb
+2026-11-24,Tue,Core,Half-Kneeling Pallof Press,1,10,25,250,33.3,"L side; 25 lb, same as Nov 19. Back a little tight from morning burpees."
+2026-11-24,Tue,Core,Half-Kneeling Pallof Press,2,10,25,250,33.3,L side
+2026-11-24,Tue,Core,Half-Kneeling Pallof Press,3,10,25,250,33.3,L side
+2026-11-24,Tue,Core,Half-Kneeling Pallof Press,1,10,25,250,33.3,"R side; 25 lb, same as Nov 19. Back a little tight from morning burpees."
+2026-11-24,Tue,Core,Half-Kneeling Pallof Press,2,10,25,250,33.3,R side
+2026-11-24,Tue,Core,Half-Kneeling Pallof Press,3,10,25,250,33.3,R side
